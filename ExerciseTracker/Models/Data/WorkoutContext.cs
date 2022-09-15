@@ -9,13 +9,16 @@ namespace ExerciseTracker.Models.Data
 {
     public class WorkoutContext : DbContext
     {
-        public DbSet<Workout> Workouts { get; set; }
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public WorkoutContext(DbContextOptions<WorkoutContext> options) : base(options)
         {
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\\Local;Initial Catalog=PhoneBook; Integrated Security=True");
-            optionsBuilder.UseSqlServer(@"Server=.;Database=WorkoutLogger;Trusted_Connection=True;");
         }
+        public DbSet<Workout> Workout { get; set; }
+
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    //optionsBuilder.UseSqlServer(@"Server=(localdb)\\Local;Initial Catalog=PhoneBook; Integrated Security=True");
+        //    optionsBuilder.UseSqlServer(@"Server=.;Database=WorkoutLogger;Trusted_Connection=True;");
+        //}
     }
 }

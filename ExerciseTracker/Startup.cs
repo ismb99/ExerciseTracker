@@ -1,5 +1,7 @@
-﻿using ExerciseTracker.Repository;
+﻿using ExerciseTracker.Models.Data;
+using ExerciseTracker.Repository;
 using ExerciseTracker.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,10 +16,15 @@ namespace ExerciseTracker
         public static IServiceProvider ConfigureService()
         {
             var provider = new ServiceCollection()
-                .AddTransient<IWorkoutRepository, WorkoutRepository>()
-                .BuildServiceProvider();    
 
-                return provider;
+                .AddSingleton<IWorkoutRepository,WorkoutRepository>()
+           .AddDbContext<WorkoutContext>(opt =>
+                opt.UseSqlServer(@"Server=.;Database=ExerciseTracker;Trusted_Connection=True;"))
+                .BuildServiceProvider();
+
+            return provider;
         }
+
+
     }
 }

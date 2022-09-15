@@ -1,10 +1,18 @@
-﻿
-
-using ExerciseTracker;
+﻿using ExerciseTracker;
+using ExerciseTracker.Repository.IRepository;
 using Microsoft.Extensions.DependencyInjection;
+
 
 var container = Startup.ConfigureService();
 
-var barService = container.GetService<IBarService>();
 
-barService.DoSomeRealWork();
+var workoutService = container.GetRequiredService<IWorkoutRepository>();
+workoutService.hello();
+
+
+
+
+
+
+
+

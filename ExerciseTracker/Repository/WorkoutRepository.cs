@@ -1,4 +1,5 @@
 ﻿using ExerciseTracker.Models;
+using ExerciseTracker.Models.Data;
 using ExerciseTracker.Repository.IRepository;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,20 @@ namespace ExerciseTracker.Repository
 {
     public class WorkoutRepository : IWorkoutRepository
     {
+
+        private readonly WorkoutContext _context;
+
+        public WorkoutRepository(WorkoutContext context)
+        {
+            _context = context;
+        }
+    
         public Workout Add(Workout workout)
         {
-            throw new NotImplementedException();
+            _context.Workout.Add(workout);
+            _context.SaveChanges();
+
+            return workout;
         }
 
         public Workout Delete(int id)
@@ -22,12 +34,17 @@ namespace ExerciseTracker.Repository
 
         public IEnumerable<Workout> GetAllWorkouts()
         {
+            return _context.Workout.ToList();
+        }
+
+        public Workout GetWorkoutById(int id)
+        {
             throw new NotImplementedException();
         }
 
-        public Workout GetWorkout(int id)
+        public void hello()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Hej");
         }
 
         public Workout Update(Workout workout)
