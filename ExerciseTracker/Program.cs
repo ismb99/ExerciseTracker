@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 var container = Startup.ConfigureService();
 
 
-var workoutService = container.GetRequiredService<IWorkoutRepository>();
+var workoutService = container.GetService<IWorkoutRepository>();
 workoutService.hello();
 
 
