@@ -12,14 +12,7 @@ namespace ExerciseTracker
     public class UserInput
     {
 
-        private readonly IWorkoutRepository _workoutRepository;
 
-        ExerciseController exerciseController = new ExerciseController(_workoutRepository);
-
-        public UserInput(IWorkoutRepository workoutRepository)
-        {
-            _workoutRepository = workoutRepository;
-        }
 
         public void ShowMenu()
         {
