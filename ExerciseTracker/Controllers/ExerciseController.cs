@@ -13,25 +13,26 @@ namespace ExerciseTracker.Controllers
 
         private readonly IWorkoutRepository _workoutRepostitory;
 
+
         public ExerciseController(IWorkoutRepository workoutRepostitory)
         {
             _workoutRepostitory = workoutRepostitory;
         }
 
+        public void Home()
+        {
+            UserInput userInput = new();
+            userInput.ShowMenu();
+
+
+        }
+
         public void Post()
         {
-            Console.Write("Type the  date, or 0 to return to main menu: ");
-            string date = Console.ReadLine();
-
-            Console.Write("Type hours you worktout, or 0 to return to main menu: ");
-            string time = Console.ReadLine();
-
-            Console.Write("Write comment, or 0 to return to main menu: ");
-            string comment = Console.ReadLine();
 
             var workoutObj = new Workout()
             {
-                Date = date,
+                DateStart = date,
                 Time = time,
                 Comments = comment
             };

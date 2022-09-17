@@ -9,8 +9,9 @@ namespace ExerciseTracker.Models
     public class Workout
     {
         public int Id { get; set; }
-        public string? Date { get; set; }
-        public string? Time { get; set; }
+        public DateTime DateStart { get; set; }
+        public DateTime DateEnd { get; set; }
+        public TimeSpan Duration { get; set; }
         public string? Comments { get; set; }
     }
 }

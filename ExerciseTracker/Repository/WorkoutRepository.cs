@@ -18,6 +18,7 @@ namespace ExerciseTracker.Repository
         {
             _context = context;
         }
+
     
         public Workout Add(Workout workout)
         {
@@ -42,10 +43,6 @@ namespace ExerciseTracker.Repository
             throw new NotImplementedException();
         }
 
-        public void hello()
-        {
-            Console.WriteLine("Hej");
-        }
 
         public Workout Update(Workout workout)
         {

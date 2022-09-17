@@ -14,6 +14,5 @@ namespace ExerciseTracker.Repository.IRepository
         Workout Add(Workout workout);
         Workout Update(Workout workout);
         Workout Delete(int id);
-        void hello();
     }
 }
