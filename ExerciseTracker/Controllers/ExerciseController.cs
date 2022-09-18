@@ -20,11 +20,10 @@ namespace ExerciseTracker.Controllers
             _workoutRepostitory = workoutRepostitory;
         }
 
-        public void Home()
-        {
-            var workout= ShowMenu();
-
-        }
+        //public void Home()
+        //{
+        //    var workout= ShowMenu();
+        //}
 
         public void Post( Workout workout)
         {
@@ -39,12 +38,24 @@ namespace ExerciseTracker.Controllers
 
         public void GetAll()
         {
+            var workoutList = _workoutRepostitory.GetAllWorkouts().ToList();
+
+            WorkoutVisualizer.ShowWorkouts(workoutList);
+
+            //foreach (var item in workoutList)
+            //{
+            //    Console.WriteLine(item.Id);
+            //    Console.WriteLine(item.DateStart);
+            //    Console.WriteLine(item.DateEnd);
+            //    Console.WriteLine(item.Duration);
+            //    Console.WriteLine(item.Comments);
+            //}
 
         }
 
-        public Workout ShowMenu()
+        public void ShowMenu() // ändra return typ (Adama)
         {
-            Workout userinputResult= new Workout();
+            //Workout userinputResult= new Workout();
 
             Console.WriteLine("\n");
             Console.WriteLine(@"What would you like todo ? Choose from the options below:
@@ -62,9 +73,12 @@ namespace ExerciseTracker.Controllers
             switch (userChoice)
             {
                 case "1":
-                    userinputResult= ProcessAdd();
-                    Post(userinputResult);
-                    return userinputResult;
+                    //userinputResult= ProcessAdd();
+                    //Post(userinputResult);
+                    //return userinputResult;
+
+                    ProcessAdd();
+                    break;
 
 
                 case "2":
@@ -78,34 +92,31 @@ namespace ExerciseTracker.Controllers
                     //    comment = "",
                     //    
                     //}
-                    return userinputResult;
+                    //return userinputResult;
 
                 case "3":
                     //ProcessUpdate
-                    return userinputResult;
+                    //return userinputResult;
 
                 case "4":
-                    //GetAll
-                    return userinputResult;
+                    GetAll();
+                    break;
+                    //return userinputResult;
 
                 case "5":
                     //GetById
-                    return userinputResult; ;
+                    //return userinputResult; 
 
                 default:
-                    return userinputResult;
+                    //return userinputResult;
+                    break;
             }
         }
 
-        private void ProcessDelete()
-        {
-            
-        }
+     
 
         private Workout ProcessAdd()
         {
-
-
             DateTime startTime;
             DateTime endTime;
 
@@ -133,9 +144,7 @@ namespace ExerciseTracker.Controllers
                 dateEnd = Console.ReadLine();
             }
 
-
             // validera så att man inte kan lägga in fel tid och datum
-
 
             Console.WriteLine("Add comments or press 0 to return to main menu");
             string comment = Console.ReadLine();
@@ -148,9 +157,6 @@ namespace ExerciseTracker.Controllers
                 comment = Console.ReadLine();
             }
 
-
-
-
             TimeSpan duration = endTime - startTime;
 
             var workoutObj = new Workout()
@@ -161,7 +167,6 @@ namespace ExerciseTracker.Controllers
                 Duration = duration
             };
 
-            
             //Post(workoutObj);
             return workoutObj;
         }

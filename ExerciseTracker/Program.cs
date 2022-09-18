@@ -23,7 +23,8 @@ class Program
 
         var exerciseController = new ExerciseController(workoutRepository);
 
-        exerciseController.Home();
+        //exerciseController.Home();
+        exerciseController.ShowMenu();
 
     }
 

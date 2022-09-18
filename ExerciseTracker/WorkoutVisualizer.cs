@@ -9,7 +9,7 @@ namespace ExerciseTracker
 {
     public class WorkoutVisualizer
     {
-        public static void ShowContacts<T>(List<T> tableData) where T : class
+        public static void ShowWorkouts<T>(List<T> tableData) where T : class
         {
             Console.WriteLine("\n\n");
 
