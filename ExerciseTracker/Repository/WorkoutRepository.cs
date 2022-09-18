@@ -41,6 +41,7 @@ namespace ExerciseTracker.Repository
         public Workout GetWorkoutById(int id)
         {
             throw new NotImplementedException();
+
         }
 
 

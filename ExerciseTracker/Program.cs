@@ -18,6 +18,7 @@ class Program
 
         var workoutRepository = host.Services.GetService<IWorkoutRepository>();
 
+
         //ExerciseController excerciseController = new ExerciseController(workoutRepository);
 
         var exerciseController = new ExerciseController(workoutRepository);

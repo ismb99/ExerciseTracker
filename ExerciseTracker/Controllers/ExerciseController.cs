@@ -32,6 +32,16 @@ namespace ExerciseTracker.Controllers
             _workoutRepostitory.Add(workout);
         }
 
+        public void Remove(int id)
+        {
+            _workoutRepostitory.Delete(id);
+        }
+
+        public void GetAll()
+        {
+
+        }
+
         public Workout ShowMenu()
         {
             Workout userinputResult= new Workout();
@@ -59,6 +69,7 @@ namespace ExerciseTracker.Controllers
 
                 case "2":
                     //userinputResult=//ProcessDelete
+                    //ProcessDelete();
 
                     //var nullWorkout= new Workout()
                     //{
@@ -86,8 +97,14 @@ namespace ExerciseTracker.Controllers
             }
         }
 
+        private void ProcessDelete()
+        {
+            
+        }
+
         private Workout ProcessAdd()
         {
+
 
             DateTime startTime;
             DateTime endTime;
@@ -95,9 +112,9 @@ namespace ExerciseTracker.Controllers
             Console.Write("Insert start time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
             var dateStart = Console.ReadLine();
 
-            if(dateStart == "0")
-                ShowMenu();
-           
+            if(dateStart == "0") ShowMenu();
+
+
             while (!DateTime.TryParseExact(dateStart, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out startTime))
             {
                 Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
@@ -107,14 +124,18 @@ namespace ExerciseTracker.Controllers
             Console.Write("Insert end time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
             var dateEnd = Console.ReadLine();
 
-            if (dateEnd == "0")
-                ShowMenu();
+            if (dateEnd == "0") ShowMenu();
+
 
             while (!DateTime.TryParseExact(dateEnd, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out endTime))
             {
                 Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
                 dateEnd = Console.ReadLine();
             }
+
+
+            // validera så att man inte kan lägga in fel tid och datum
+
 
             Console.WriteLine("Add comments or press 0 to return to main menu");
             string comment = Console.ReadLine();
@@ -126,6 +147,10 @@ namespace ExerciseTracker.Controllers
                 Console.WriteLine("Comments can't be empty! Input your comment once more");
                 comment = Console.ReadLine();
             }
+
+
+
+
             TimeSpan duration = endTime - startTime;
 
             var workoutObj = new Workout()
@@ -136,6 +161,8 @@ namespace ExerciseTracker.Controllers
                 Duration = duration
             };
 
+            
+            //Post(workoutObj);
             return workoutObj;
         }
     }
