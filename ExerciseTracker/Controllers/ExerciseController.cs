@@ -2,6 +2,7 @@
 using ExerciseTracker.Repository.IRepository;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,27 +89,51 @@ namespace ExerciseTracker.Controllers
         private Workout ProcessAdd()
         {
 
+            DateTime startTime;
+            DateTime endTime;
 
-            Console.Write("Type the  date, or 0 to return to main menu: ");
-            var dateStart = Convert.ToDateTime(Console.ReadLine());
+            Console.Write("Insert start time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
+            var dateStart = Console.ReadLine();
 
+            if(dateStart == "0")
+                ShowMenu();
+           
+            while (!DateTime.TryParseExact(dateStart, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out startTime))
+            {
+                Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
+                dateStart = Console.ReadLine();
+            }
 
-            Console.Write("Type the  date, or 0 to return to main menu: ");
-            var dateEnd = Convert.ToDateTime(Console.ReadLine());
+            Console.Write("Insert end time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
+            var dateEnd = Console.ReadLine();
 
-            Console.Write("Type hours you worktout, or 0 to return to main menu: ");
-            string duration = Console.ReadLine();
+            if (dateEnd == "0")
+                ShowMenu();
 
-            Console.Write("Write comment, or 0 to return to main menu: ");
+            while (!DateTime.TryParseExact(dateEnd, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out endTime))
+            {
+                Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
+                dateEnd = Console.ReadLine();
+            }
+
+            Console.WriteLine("Add comments or press 0 to return to main menu");
             string comment = Console.ReadLine();
 
+            if (comment == "0") ShowMenu();
+
+            while (string.IsNullOrEmpty(comment))
+            {
+                Console.WriteLine("Comments can't be empty! Input your comment once more");
+                comment = Console.ReadLine();
+            }
+            TimeSpan duration = endTime - startTime;
 
             var workoutObj = new Workout()
             {
-                DateStart = dateStart,
-                DateEnd = dateEnd,
-                Duration=dateEnd - dateStart,
-                Comments=comment
+                DateStart = startTime,
+                DateEnd = endTime,
+                Comments = comment,
+                Duration = duration
             };
 
             return workoutObj;

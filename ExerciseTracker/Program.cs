@@ -12,21 +12,18 @@ class Program
 {
     static void Main(string[] args)
     {
-
         var host = CreateHostBuilder(args).Build();
 
         host.Services.GetService<IWorkoutRepository>();
 
-        
         var workoutRepository = host.Services.GetService<IWorkoutRepository>();
-
 
         //ExerciseController excerciseController = new ExerciseController(workoutRepository);
 
-        
-        
-        
-       
+        var exerciseController = new ExerciseController(workoutRepository);
+
+        exerciseController.Home();
+
     }
 
     private static IHostBuilder CreateHostBuilder(string[] args)
@@ -38,8 +35,8 @@ class Program
                 services.AddScoped<IWorkoutRepository, WorkoutRepository>();
                 services.AddDbContext<WorkoutContext>(options => options.UseSqlServer("Server=.;Database=ExerciseTracker;Trusted_Connection=True"));
             });
-
         return hostBuilder;
     }
 }
+
 
