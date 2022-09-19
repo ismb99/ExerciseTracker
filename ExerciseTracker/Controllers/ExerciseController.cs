@@ -27,7 +27,6 @@ namespace ExerciseTracker.Controllers
 
         public void Post( Workout workout)
         {
-
             _workoutRepostitory.Add(workout);
         }
 
@@ -41,16 +40,11 @@ namespace ExerciseTracker.Controllers
             var workoutList = _workoutRepostitory.GetAllWorkouts().ToList();
 
             WorkoutVisualizer.ShowWorkouts(workoutList);
+        }
 
-            //foreach (var item in workoutList)
-            //{
-            //    Console.WriteLine(item.Id);
-            //    Console.WriteLine(item.DateStart);
-            //    Console.WriteLine(item.DateEnd);
-            //    Console.WriteLine(item.Duration);
-            //    Console.WriteLine(item.Comments);
-            //}
-
+        public void Put(Workout workout)
+        {
+            _workoutRepostitory.Update(workout);
         }
 
         public void ShowMenu() // ändra return typ (Adama)
@@ -83,19 +77,21 @@ namespace ExerciseTracker.Controllers
 
                 case "2":
                     //userinputResult=//ProcessDelete
-                    //ProcessDelete();
+                    ProcessDelete();
+                    break;
 
-                    //var nullWorkout= new Workout()
-                    //{
-                    // Skapa ett objekt med tomma värden om det inte skulle funka att returnera userinputResult
-                    //    date= dateTime.Now()
-                    //    comment = "",
-                    //    
-                    //}
-                    //return userinputResult;
+                //var nullWorkout= new Workout()
+                //{
+                // Skapa ett objekt med tomma värden om det inte skulle funka att returnera userinputResult
+                //    date= dateTime.Now()
+                //    comment = "",
+                //    
+                //}
+                //return userinputResult;
 
                 case "3":
-                    //ProcessUpdate
+                    ProcessUpdate();
+                    break;
                     //return userinputResult;
 
                 case "4":
@@ -113,9 +109,101 @@ namespace ExerciseTracker.Controllers
             }
         }
 
-     
+        private void ProcessUpdate()
+        {
+            // Användare väljer ett id
+            // 
+            GetAll();
+            Console.Write("Choose the id you want to update or press 0 for main menu: ");
+            var allWorkouts = _workoutRepostitory.GetAllWorkouts();
 
-        private Workout ProcessAdd()
+            string userInput = Console.ReadLine();
+            if (userInput == "0") ShowMenu();
+
+            int id = int.Parse(userInput);
+
+           var workOutId = allWorkouts.FirstOrDefault(x => x.Id == id);
+
+
+         
+            if (workOutId != null)
+            {
+                DateTime startTime;
+                DateTime endTime;
+
+                Console.Write("Insert start time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
+               
+                var dateStart = Console.ReadLine();
+                
+                while (!DateTime.TryParseExact(dateStart, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out startTime))
+                {
+                    Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
+                    dateStart = Console.ReadLine();
+                }
+
+                Console.Write("Insert end time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
+                var dateEnd = Console.ReadLine();
+
+                if (dateEnd == "0") ShowMenu();
+
+
+                while (!DateTime.TryParseExact(dateEnd, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out endTime))
+                {
+                    Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
+                    dateEnd = Console.ReadLine();
+                }
+
+                // validera så att man inte kan lägga in fel tid och datum
+
+                Console.WriteLine("Add comments or press 0 to return to main menu");
+                string comment = Console.ReadLine();
+
+                if (comment == "0") ShowMenu();
+
+                while (string.IsNullOrEmpty(comment))
+                {
+                    Console.WriteLine("Comments can't be empty! Input your comment once more");
+                    comment = Console.ReadLine();
+                }
+                TimeSpan duration = endTime - startTime;
+
+
+                var updatedWorkout = new Workout()
+                {
+                    DateStart = startTime,
+                    DateEnd = endTime,
+                    Comments = comment,
+                    Duration = duration
+                };
+
+                Put(updatedWorkout);
+            }
+
+            else
+            {
+                Console.WriteLine("Workout dosent exsist");
+            }
+
+        }
+
+        private void ProcessDelete()
+        {
+            //var allWorkouts = _workoutRepostitory.GetAllWorkouts();
+            GetAll();
+            Console.Write("Choose the id you want to delete or press 0 for main menu: ");
+
+            string userInput = Console.ReadLine();
+
+            if (userInput == "0") ShowMenu();
+            // Convert.ToInt32(userInput) < 0
+
+            int id = int.Parse(userInput);
+            
+
+            Remove(id);
+        }
+
+        private void ProcessAdd()
         {
             DateTime startTime;
             DateTime endTime;
@@ -167,8 +255,8 @@ namespace ExerciseTracker.Controllers
                 Duration = duration
             };
 
-            //Post(workoutObj);
-            return workoutObj;
+            Post(workoutObj);
+            //return workoutObj;
         }
     }
 }

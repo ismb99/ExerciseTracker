@@ -10,7 +10,7 @@ namespace ExerciseTracker.Repository.IRepository
     public interface IWorkoutRepository
     {
         Workout GetWorkoutById(int id);
-        IEnumerable<Workout> GetAllWorkouts();
+        List<Workout> GetAllWorkouts();
         Workout Add(Workout workout);
         Workout Update(Workout workout);
         Workout Delete(int id);

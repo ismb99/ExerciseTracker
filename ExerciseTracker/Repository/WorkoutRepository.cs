@@ -11,7 +11,6 @@ namespace ExerciseTracker.Repository
 {
     public class WorkoutRepository : IWorkoutRepository
     {
-
         private readonly WorkoutContext _context;
 
         public WorkoutRepository(WorkoutContext context)
@@ -30,16 +29,24 @@ namespace ExerciseTracker.Repository
 
         public Workout Delete(int id)
         {
-            throw new NotImplementedException();
+            var workout = _context.Workout.FirstOrDefault(x => x.Id == id);
+            if (workout != null)
+            {
+                _context.Workout.Remove(workout);
+                _context.SaveChanges();
+            }
+            return workout;
+
         }
 
-        public IEnumerable<Workout> GetAllWorkouts()
+        public List<Workout> GetAllWorkouts()
         {
             return _context.Workout.ToList();
         }
 
         public Workout GetWorkoutById(int id)
         {
+            
             throw new NotImplementedException();
 
         }
@@ -47,7 +54,12 @@ namespace ExerciseTracker.Repository
 
         public Workout Update(Workout workout)
         {
-            throw new NotImplementedException();
+            _context.Workout.Update(workout);
+            _context.SaveChanges();
+
+            return workout;
+
+
         }
     }
 }
