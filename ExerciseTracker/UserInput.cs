@@ -3,6 +3,7 @@ using ExerciseTracker.Repository.IRepository;
 using ExerciseTracker.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace ExerciseTracker
 {
     public class UserInput
     {
+        //ExerciseController exerciseController = new ExerciseController();
 
         //public void ShowMenu()
         //{
@@ -72,5 +74,48 @@ namespace ExerciseTracker
         //    Console.Write("Write comment, or 0 to return to main menu: ");
         //    string comment = Console.ReadLine();
         //}
+
+
+        public static DateTime GetStartDateInput()
+        {
+            DateTime startTime;
+
+            Console.Write("\nInsert start time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
+            var dateStart = Console.ReadLine();
+
+            while (!DateTime.TryParseExact(dateStart, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out startTime))
+            {
+                Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
+                dateStart = Console.ReadLine();
+            }
+            return startTime;
+        }
+
+        public static DateTime GetEndDateInput()
+        {
+            DateTime endTime;
+
+            Console.Write("\nInsert end time format (yyyy-mm-dd HH:mm) or press 0 to return to main menu: ");
+            var dateEnd = Console.ReadLine();
+
+
+            while (!DateTime.TryParseExact(dateEnd, "yyyy-MM-dd HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out endTime))
+            {
+                Console.WriteLine("\n\nInvalid date. (Format: yyyy-mm-dd hh:mm). Type 0 to return to main manu or try again:\n\n");
+                dateEnd = Console.ReadLine();
+            }
+
+            return endTime;
+        }
+
+        public static TimeSpan CalculateDuration()
+        {
+            var start = GetStartDateInput();
+            var end = GetEndDateInput();
+
+            var duration = end - start;
+
+            return duration;
+        }
     }
 }
