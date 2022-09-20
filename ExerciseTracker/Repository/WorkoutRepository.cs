@@ -18,7 +18,6 @@ namespace ExerciseTracker.Repository
             _context = context;
         }
 
-    
         public Workout Add(Workout workout)
         {
             _context.Workout.Add(workout);
@@ -46,20 +45,22 @@ namespace ExerciseTracker.Repository
 
         public Workout GetWorkoutById(int id)
         {
-            
-            throw new NotImplementedException();
+            var workout = _context.Workout.Where(x => x.Id == id).FirstOrDefault();
 
+            return workout;
         }
 
 
-        public Workout Update(Workout workout)
+        public Workout Update(Workout workoutChanges)
         {
-            _context.Workout.Update(workout);
+            _context.Workout.Update(workoutChanges);
             _context.SaveChanges();
+            return workoutChanges;
 
-            return workout;
-
-
+            //var workout = _context.Workout.Attach(workoutChanges);
+            //workout.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //_context.SaveChanges();
+            //return workoutChanges;
         }
     }
 }
